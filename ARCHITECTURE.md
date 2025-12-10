@@ -5,30 +5,32 @@ This document serves as a critical, living template designed to equip agents wit
 This section provides a high-level overview of the project's directory and file structure, categorised by architectural layer or major functional area. It is essential for quickly navigating the codebase, locating relevant files, and understanding the overall organization and separation of concerns.
 
 [Project Root]/
+```text
+[Project Root]/
 ├── lib/                      # Main source code for the Flutter application
 │   ├── core/                 # Core functionalities, common utilities, network setup
-│   │   ├── navigation/       # Holds the app navigation configurations and routes and interceptors etc
-│   │   ├── di/               # Holds global dependency injections
-│   │   └── theme/            # Holds the app theme, colors, material theme, etc
-│   │   └── utils/            # holds utility function
+│   │   ├── navigation/       # App navigation configurations, routes, and interceptors
+│   │   ├── di/               # Global dependency injections
+│   │   ├── theme/            # App theme, colors, material theme, etc.
+│   │   └── utils/            # Utility functions
 │   ├── data/                 # Data layer (repositories, data sources - local/remote)
 │   │   ├── local/            # Local data sources (database, shared preferences)
-│   │   ├── datasource's/      # Remote data sources (API clients)
-│   │   ├── repositories/     # Holds repositories
-│   │   ├── banking service/  # Holds core banking service functions
+│   │   ├── datasources/      # Remote data sources (API clients)
+│   │   ├── repositories/     # Repository implementations
+│   │   ├── banking_service/  # Core banking service functions
 │   │   └── dto/              # Data models for serialization/deserialization
-│   ├── features/             # Feature-specific modules (e.g., transaction, authentication)
+│   ├── features/             # Feature-specific modules
 │   │   ├── [feature_name]/   # Individual feature module
 │   │   │   ├── di/           # Dependencies layer for the feature
 │   │   │   ├── domain/       # Domain layer for the feature
-│   │   │   └── presentation/ # Presentation layer for the feature (UI, BLoC/Provider/Riverpod)
+│   │   │   └── presentation/ # Presentation layer (UI, BLoC/Provider/Riverpod)
 │   └── main.dart             # Application entry point
 ├── assets/                   # Static assets (images, fonts, etc.)
 ├── test/                     # Unit and widget tests
 ├── pubspec.yaml              # Project dependencies and metadata
 ├── README.md                 # Project overview and quick start guide
 └── ARCHITECTURE.md           # This document
-
+```
 ## 2. High-Level System Diagram
 The `aorta` application is a sample test application for simulating real life transactions with account to network unreliability
 
