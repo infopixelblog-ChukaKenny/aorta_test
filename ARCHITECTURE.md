@@ -65,6 +65,6 @@ Purpose: Stores sensitive information such as authentication tokens or user pref
 
 Project Name: aorta
 
-Repository URL: [https://github.com/TuleSimon/aorta_test/blob/main/ARCHITECTURE.md][url]
+Repository URL: https://github.com/TuleSimon/aorta_test
 
 Primary Contact/Team: Tule Simon
