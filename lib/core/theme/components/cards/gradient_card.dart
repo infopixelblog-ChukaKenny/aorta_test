@@ -1,0 +1,57 @@
+
+import 'package:aorta/core/theme/colors/aorta_colors.dart';
+import 'package:aorta/core/utils/utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class GradientCard extends StatelessWidget {
+  final Widget children;
+  final BoxShape? shape;
+  final bool isLoading;
+  final EdgeInsets? insets;
+  final Color? color;
+
+  const GradientCard(
+      {super.key,
+        required this.children,
+        this.insets,
+        this.shape,
+        this.color,
+        this.isLoading = false})
+      : super();
+
+  @override
+  Widget build(BuildContext context) {
+    return isLoading
+        ? ClipRRect(
+      borderRadius: BorderRadius.circular(context.getWidth()),
+      child: Container(
+        color: Colors.green,
+        width: 30.w,
+        height: 30.h,
+      ),
+    )
+        : Container(
+      decoration: BoxDecoration(
+          gradient: color != null
+              ? null
+              : const LinearGradient(
+            colors: [
+              AortaColorsPalette.brand600,
+              AortaColorsPalette.brand300,
+              AortaColorsPalette.brand100,
+            ],
+            stops: [0.0, 0.5, 1.0],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          color: color,
+          shape: shape ?? BoxShape.rectangle,
+          borderRadius:
+          shape == null ? BorderRadius.circular(10.w) : null),
+      padding:
+      insets ?? EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      child: Center(child: children),
+    );
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "@@locale": "en",
+  "stayOnTheLoopByFollowingYourFavouriteLeagues": "Stay on the loop by following your favourite leagues.",
+  "favourite_team_desc": "Get latest updates, statistics and events from your favourite team.",
+  "title": "Checkscores",
+  "something_went_wrong": "Something went wrong",
+  "get_started": "Get Started",
+  "continuee": "continue",
+  "already_have_an_account_login": "Already have an account? Login",
+  "skip": "Skip",
+  "retry": "Retry",
+  "leagues": "leagues",
+  "search_leagues": "Search leagues",
+  "choose_your_favorite_league": "Choose Your Favorite Leagues",
+  "choose_your_favorite_teams": "Choose Your Favorite Teams",
+  "suggestedForYou": "Suggested for you",
+  "favorite": "Favorite",
+  "empty_template": "No {p1} available at the moment, refresh or try again later",
+  "@empty_template": {
+    "placeholders": {
+      "p1": {}
+    }
+  },
+  "favourites": "Favourites",
+  "add": "Add"
+}
