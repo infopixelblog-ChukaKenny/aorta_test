@@ -31,6 +31,7 @@ This section provides a high-level overview of the project's directory and file 
 ├── README.md                 # Project overview and quick start guide
 └── ARCHITECTURE.md           # This document
 ```
+
 ## 2. High-Level System Diagram
 The `aorta` application is a sample test application for simulating real life transactions with account to network unreliability
 
@@ -64,6 +65,6 @@ Purpose: Stores sensitive information such as authentication tokens or user pref
 
 Project Name: aorta
 
-Repository URL: [Insert Repository URL]
+Repository URL: [https://github.com/TuleSimon/aorta_test/blob/main/ARCHITECTURE.md][url]
 
 Primary Contact/Team: Tule Simon
