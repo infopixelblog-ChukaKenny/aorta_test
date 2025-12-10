@@ -41,6 +41,7 @@ The `aorta` application is a sample test application for simulating real life tr
                       |
                       +--> [Local Secure Storage]
 
+
 ## 3. Core Components
 Auto Route for Navigation
 Material Components
