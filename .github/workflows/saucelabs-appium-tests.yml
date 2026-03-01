@@ -55,11 +55,11 @@ jobs:
         node-version: '20'
 
     - name: Install Node dependencies
-      working-directory: test/appium_saucelabs_integrationTests
+      working-directory: test/appium_saucelabs_cicd_integrationTest
       run: npm ci
 
     - name: Run tests on Sauce Labs
-      working-directory: test/appium_saucelabs_integrationTests
+      working-directory: test/appium_saucelabs_cicd_integrationTest
       env:
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
