@@ -1,0 +1,73 @@
+name: Auto-build Aorta app & run saucelabs-appium based CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: "17"
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'       
+        cache: true
+
+    - name: Install Dependencies
+      run: flutter pub get
+
+    - name: Build Android Debug APK
+      run: flutter build apk --debug
+
+    - name: Upload APK to Sauce Labs Storage
+      id: upload_app
+      env:
+        SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      run: |
+        APK_PATH="build/app/outputs/flutter-apk/app-debug.apk"
+        if [ ! -f "$APK_PATH" ]; then
+          ls -la build/app/outputs/flutter-apk || true
+          exit 1
+        fi
+        SAUCE_API="https://api.eu-central-1.saucelabs.com"
+        curl -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" -X POST "${SAUCE_API}/v1/storage/upload?overwrite=true" -F "file=@${APK_PATH}" -F "name=$(basename ${APK_PATH})"
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Node dependencies
+      working-directory: test/appium_saucelabs_integrationTests
+      run: npm ci
+
+    - name: Run tests on Sauce Labs
+      working-directory: test/appium_saucelabs_integrationTests
+      env:
+        SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      run: npx wdio run wdio.conf.js --spec test/specs/aorta.js --logLevel debug
+
+    - name: Upload Test Report Artifacts (Optional)
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-report
+        path: coverage/lcov.info
+      if: always() 
