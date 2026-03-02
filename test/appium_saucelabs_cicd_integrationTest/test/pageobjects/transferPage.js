@@ -1,6 +1,6 @@
 const fixtures = require('../../utils/fixtures')
 const helperFunctions = require("../pageobjects/helperFunctions")
-const selectors = require('../../../appium_saucelabs_integrationTests/selectors/transactionSelectors')
+const selectors = require('../../selectors/transactionSelectors')
 const transactionHistoryPage = require('../pageobjects/transactionHistoryPage')
 
 
