@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Setup Java
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: temurin
         java-version: "17"
@@ -53,7 +53,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '22'
 
     - name: Install Node dependencies
       working-directory: test/appium_saucelabs_cicd_integrationTest
@@ -70,5 +70,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-results-report
-        path: coverage/lcov.info
-      if: always() 
+        path: test/appium_saucelabs_cicd_integrationTest/allure-results/
+      if: always()
