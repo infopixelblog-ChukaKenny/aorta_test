@@ -33,6 +33,11 @@ jobs:
     - name: Install Dependencies
       run: flutter pub get
 
+    - name: Patch Codebase for FontAwesome Compatibility
+      run: |
+        sed -i 's/Icons.cancel/FontAwesomeIcons.circleXmark/g' lib/core/utils/snackbars.dart
+        sed -i 's/Icons.check_circle/FontAwesomeIcons.circleCheck/g' lib/core/utils/snackbars.dart
+
     - name: Build Android Debug APK
       run: flutter build apk --debug --android-skip-build-dependency-validation
 
