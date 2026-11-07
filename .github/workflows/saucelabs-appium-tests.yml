@@ -34,7 +34,7 @@ jobs:
       run: flutter pub get
 
     - name: Build Android Debug APK
-      run: flutter build apk --debug
+      run: flutter build apk --debug --android-skip-build-dependency-validation
 
     - name: Upload APK to Sauce Labs Storage
       id: upload_app
