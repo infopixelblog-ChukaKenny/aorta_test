@@ -116,7 +116,7 @@ exports.config = {
         // },
 
         platformName: 'Android',
-        'appium:app': 'storage:filename=app-debug.apk', 
+        'appium:app': process.env.SAUCE_APP_ID || 'storage:filename=app-debug.apk', 
         'appium:deviceName': 'Samsung.*',
         'appium:platformVersion': '16',
         'appium:automationName': 'UiAutomator2',
