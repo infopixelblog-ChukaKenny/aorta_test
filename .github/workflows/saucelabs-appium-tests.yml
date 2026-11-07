@@ -50,14 +50,26 @@ jobs:
         APK_PATH="build/app/outputs/flutter-apk/app-debug.apk"
         if [ ! -f "$APK_PATH" ]; then
           echo "Error: APK file not found at $APK_PATH"
-          ls -la build/app/outputs/flutter-apk || true
           exit 1
         fi
         
-        echo "Uploading APK to Sauce Labs EU Central App Storage..."
-        curl -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" \
+        echo "Uploading APK to Sauce Labs EU Central..."
+        RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
+          -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" \
           -X POST "https://saucelabs.com" \
-          -F "file=@${APK_PATH}"
+          -F "file=@${APK_PATH}")
+        
+        echo "--- Sauce Labs API Response ---"
+        echo "$RESPONSE"
+        echo "-------------------------------"
+        
+        if [[ "$RESPONSE" == *"HTTP_STATUS:2"* ]]; then
+          echo "Upload successful!"
+        else
+          echo "Error: Sauce Labs upload failed."
+          exit 1
+        fi
+
 
     - name: Setup Node
       uses: actions/setup-node@v4
