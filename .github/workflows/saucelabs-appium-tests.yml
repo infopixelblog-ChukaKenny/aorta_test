@@ -40,35 +40,34 @@ jobs:
 
     - name: Build Android Debug APK
       run: flutter build apk --debug --android-skip-build-dependency-validation
-
-    - name: Upload APK to Sauce Labs Storage
-      id: upload_app
+      
+    - name: Upload APK to Sauce Labs
       env:
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
       run: |
         APK_PATH="build/app/outputs/flutter-apk/app-debug.apk"
-        if [ ! -f "$APK_PATH" ]; then
-          echo "Error: APK file not found at $APK_PATH"
-          exit 1
-        fi
-        
+        ls -lh "$APK_PATH"   # fail early if the build didn't produce it
+    
         echo "Uploading APK to Sauce Labs EU Central..."
         RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
           -u "${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}" \
-          -X POST "https://api.eu-central-1.saucelabs.com/v1/storage/upload/app" \
-          -F "file=@${APK_PATH}")
-        
+          -X POST "https://api.eu-central-1.saucelabs.com/v1/storage/upload" \
+          -F "payload=@${APK_PATH}" \
+          -F "name=app-debug.apk")
+    
         echo "--- Sauce Labs API Response ---"
         echo "$RESPONSE"
         echo "-------------------------------"
-        
-        if [[ "$RESPONSE" == *"HTTP_STATUS:2"* ]]; then
-          echo "Upload successful!"
-        else
+    
+        STATUS=$(echo "$RESPONSE" | grep HTTP_STATUS | cut -d: -f2)
+        if [ "$STATUS" != "201" ] && [ "$STATUS" != "200" ]; then
           echo "Error: Sauce Labs upload failed."
           exit 1
         fi
+    
+        FILE_ID=$(echo "$RESPONSE" | sed '/HTTP_STATUS/d' | jq -r '.item.id')
+        echo "SAUCE_APP_ID=storage:${FILE_ID}" >> "$GITHUB_ENV"
 
 
 
